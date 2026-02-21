@@ -13,6 +13,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
 {
+    $data = array(
+            'tittle' => 'Dashboard',
+
+        );  
     $request->validate([
         'email' => 'required|email',
         'password' => 'required'
@@ -25,10 +29,10 @@ class LoginController extends Controller
     if ($user && Hash::check($credentials['password'], $user->password)) {
         Auth::login($user);
 
-        if ($user->role === 'superadmin') {
-            return redirect('/superadmin');
-        } else if ($user->role === 'penulis') {
-            return redirect('/penulis');
+        if ($user->role === 'admin') {
+            return redirect('/dashboard');
+        } else if ($user->role === 'user') {
+            return redirect('/tugas');
         }
     }
 
@@ -36,11 +40,15 @@ class LoginController extends Controller
 }
 
     public function showLogin(){
-        return view ('login');
+        
+        return view ('auth.login');
     }
 
-    public function logout(){
+    public function logout(Request $request){
         Auth::logout();
-        return redirect('/login');
+
+        $request->session()->invalidate(); // Hapus session
+    $request->session()->regenerateToken(); // Regenerate CSRF token
+        return redirect('/');
     }
 }

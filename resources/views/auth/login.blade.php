@@ -33,24 +33,30 @@
 
                 <div class="card  border-0 shadow-lg my-5">
                     <div class="card-body col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login TIM IJO</h1>
-                                    </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Masukkan Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Masukkan Password">
-                                        </div>
-                                        <a href="{{Route('dashboard')}}" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Login TIM IJO</h1>
+                            </div>
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email" required value="{{ old('email') }}"placeholder="Masukkan Email">
+                                    @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" id="password" required placeholder="Masukkan Password">
+                                    @error('password')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+
+                        </div>
                     </div>
                 </div>
 
@@ -62,7 +68,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('sbadmin2/vendor/jquery/jquery.min.js')}} "></script>
-   <script src="{{asset('sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{asset('sbadmin2/vendor/jquery-easing/jquery.easing.min.js')}}"></script>

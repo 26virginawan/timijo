@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{$tittle}}</title>
+    <title>dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('sbadmin2/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -28,11 +28,11 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" class="toggled">
 
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggle" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -56,37 +56,34 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+            @if(auth()->user()->role == 'admin')
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item {{ request()->is('user') ? 'active' : ''}}">
+            <!-- <li class="nav-item {{ request()->is('user') ? 'active' : ''}}">
                 <a class="nav-link" href="{{Route('user')}}">
                     <i class="fas fa-fw fa-tasks"></i>
                     <span>Data User</span>
 
                 </a>
-            </li>
-            <li class="nav-item {{ request()->is('tugas','area1') ? 'active' : ''}}">
-                <a class="nav-link" href="{{Route('tugas')}}">
-                    <i class="fas fa-fw fa-tasks"></i>
-                    <span>Data Tugas</span>
-
-                </a>
-            </li>
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Laporan</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="login.html">harian</a>
-                        <a class="collapse-item" href="register.html">Mingguan</a>
-                        <a class="collapse-item" href="forgot-password.html">Bulanan</a>
-                    </div>
-                </div>
             </li> -->
+            @endif
+            <li class="nav-item {{ request()->is('tugas','area') ? 'active' : ''}}">
+                <a class="nav-link" href="{{Route('area.index')}}">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>TIM IJO</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->is('') ? 'active' : ''}}">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>DRIVER</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->is('zonaOB') ? 'active' : ''}}">
+                <a class="nav-link" href="{{Route('zonaOB.index')}}">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>OB</span>
+                </a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
@@ -125,6 +122,8 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
+                        
+                        <span class="text-dark"></span>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -137,22 +136,14 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <i class="fas fa-fw fa-sign-out-alt mr-2"></i>
+                                        <button type="submit">Logout</button>
+                                    </form>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
                             </div>
                         </li>
 
@@ -165,7 +156,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">{{$tittle}}</h1>
+                     <h1 class="h3 mb-2 text-gray-800">{{$tittle}}</h1>
+
                     @yield('content')
                 </div>
             </div>
